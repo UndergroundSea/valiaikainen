@@ -40,22 +40,32 @@ public class UserInterface extends Application {
         });
         
         settingButtons.getChildren().addAll(turn, bewareMine);
-
+        
+        Button newGame = new Button("Uusi peli");
+        
         BorderPane layout = new BorderPane();
+                
+        layout.setRight(newGame);
 
         layout.setTop(gameState);
         layout.setCenter(settingButtons);
-        layout.setPadding(new Insets(10, 10, 10, 10));
+        layout.setPadding(new Insets(10, 70, 10, 10));
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new Insets(20, 50, 50, 50));       
+        grid.setPadding(new Insets(20, 0, 50, 50));  
+        
+        newGame.setOnAction((event) -> {
+            minefield.startGame(grid, gameState, 10, 5);
+        });
 
         minefield.placeMines();
         minefield.placeButtons(grid, gameState);
 
         layout.setBottom(grid);
+        
+        
 
         Scene outlook = new Scene(layout);
 

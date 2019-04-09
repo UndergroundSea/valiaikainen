@@ -8,87 +8,87 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
 public class MineField {
-    
+
     private Pane[][] grid;
     private boolean alive;
     private int turnedPanes;
     private ArrayList<Integer> mines;
     private boolean turning;
-    
+
     public MineField(int x, int y) {
-        
+
         this.grid = new Pane[x][y];
         this.alive = true;
         this.turnedPanes = 0;
         this.mines = new ArrayList<>();
         this.turning = true;
-        
+
     }
-    
+
     public void setPane(Pane pane, int x, int y) {
-        grid[x][y] = pane; 
+        grid[x][y] = pane;
     }
-    
+
     public Pane getPane(int x, int y) {
         return grid[x][y];
     }
-    
+
     public void endGame() {
         this.alive = false;
     }
-    
+
     public boolean getAlive() {
         return this.alive;
     }
-    
+
     public ArrayList<Integer> getMines() {
         return this.mines;
-    } 
-    
+    }
+
     public void addTurnedPane() {
         this.turnedPanes++;
     }
-    
+
     public int getTurnedPanes() {
         return this.turnedPanes;
     }
-    
+
     public void setTurnedPanes(int turnedPanes) {
         this.turnedPanes = turnedPanes;
     }
-    
+
     public void setTurning(boolean turning) {
         this.turning = turning;
     }
-    
+
     public boolean getTurning() {
         return this.turning;
     }
-    
+
     public int countValue(Pane pane) {
         int x = pane.getX();
         int y = pane.getY();
         int mines = 0;
-        
+
         for (int i = x - 1; i < x + 2; i++) {
             for (int j = y - 1; j < y + 2; j++) {
-                
+
                 if (i < 0 || j < 0 || i > 9 || j > 4) {
                     continue;
-                }                
+                }
                 if (grid[i][j].getMine()) {
                     mines++;
-                }               
+                }
             }
         }
-        
+
         pane.setColor(mines);
-        
+
         return mines;
 //        grid[x][y].setValue(mines);
-        
+
     }
-    
+
     public void placeMines() {
         int mines = 0;
         Random random = new Random();
@@ -101,7 +101,7 @@ public class MineField {
             }
         }
     }
-    
+
     public void placeButtons(GridPane grid, Label gameState) {
         int timeForAMine = 0;
 
@@ -127,16 +127,20 @@ public class MineField {
             }
         }
     }
-    
+
+    public void startGame(GridPane grid, Label gameState, int x, int y) {
+        gameState.setText("Varo miinoja!");
+        this.grid = new Pane[x][y];
+        this.alive = true;
+        this.turnedPanes = 0;
+        this.mines = new ArrayList<>();
+        this.turning = true;
+        this.placeMines();
+        this.placeButtons(grid, gameState);
+        
+    }
+
 }
-
-
-
-
-
-
-
-
 
 //        if (mines == 0) {
 //            pane.setColor(Color.WHITE);
